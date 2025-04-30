@@ -78,27 +78,44 @@ class NoteAdapter(
                 .setTitle("Edit Note")
                 .setView(editText)
                 .setPositiveButton("OK") { dialogInterface, i ->
-                    val updatedText = editText.text.toString()
 
+                    val updatedText = editText.text.toString()
                     val noteRef = db.collection("notes").document(note.docId)
 
-                    noteRef
-                        .update("note", updatedText)
-                        .addOnSuccessListener {
-                            Log.d(TAG, "DocumentSnapshot successfully updated!")
-                            Toast.makeText(context, "Note Updated", Toast.LENGTH_SHORT).show()
-                            onNoteEdited()  // Refresh the notes
-                        }
-                        .addOnFailureListener { e ->
-                            Log.w(TAG, "Error updating document", e)
-                            Toast.makeText(context, "Error updating note", Toast.LENGTH_SHORT).show()
-                        }
+                    if (updatedText.isEmpty()) {
+                        // Delete the note instead
+                        noteRef.delete()
+                            .addOnSuccessListener {
+                                Toast.makeText(context, "Empty note deleted", Toast.LENGTH_SHORT)
+                                    .show()
+                                onNoteDeleted() // Call delete callback to refresh
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w(TAG, "Error deleting empty note", e)
+                                Toast.makeText(context, "Error deleting note", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                    } else {
+                        noteRef
+                            .update("note", updatedText)
+                            .addOnSuccessListener {
+                                Log.d(TAG, "DocumentSnapshot successfully updated!")
+                                Toast.makeText(context, "Note Updated", Toast.LENGTH_SHORT).show()
+                                onNoteEdited()  // Refresh the notes
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w(TAG, "Error updating document", e)
+                                Toast.makeText(context, "Error updating note", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                    }
                 }
-                .setNegativeButton("Cancel", null)
-                .create()
+                        .setNegativeButton("Cancel", null)
+                        .create()
 
-            dialog.show()
-        }
+                    dialog.show()
+                }
+
 
 
         holder.delete.setOnClickListener {
@@ -114,7 +131,7 @@ class NoteAdapter(
         }
     }
 
-    override fun getItemCount(): Int {
-        return notesList.size
+        override fun getItemCount(): Int {
+            return notesList.size
+        }
     }
-}

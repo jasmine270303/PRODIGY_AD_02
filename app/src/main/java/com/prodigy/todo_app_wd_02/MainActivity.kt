@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity() {
                     val noteText = document.getString("note") ?: ""
                     val completed = document.getBoolean("completed") ?: false// Safe access Add ?: "" (Elvis operator) to make sure if it's null, it becomes an empty string.
 
-                    val note = Note(docId, noteText)
+                    val note = Note(docId, noteText, completed)
                     notesList.add(note)
 
 
