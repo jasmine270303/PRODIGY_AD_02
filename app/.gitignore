@@ -1,4 +1,22 @@
-/build
-# Ignore Google services config
-google-services.json
+# Build and Gradle
+/build/
+/**/build/
+.gradle/
+*.log
 
+# Local and IDE config
+local.properties
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Google Services & API Keys
+**/google-services.json
+**/GoogleService-Info.plist
+*.keystore
+*.jks
+
+# OS-generated files
+.DS_Store
+Thumbs.db
