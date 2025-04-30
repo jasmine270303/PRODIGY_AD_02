@@ -79,7 +79,7 @@ class NoteAdapter(
                 .setView(editText)
                 .setPositiveButton("OK") { dialogInterface, i ->
 
-                    val updatedText = editText.text.toString()
+                    val updatedText = editText.text.toString().trim()
                     val noteRef = db.collection("notes").document(note.docId)
 
                     if (updatedText.isEmpty()) {

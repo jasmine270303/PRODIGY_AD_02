@@ -77,7 +77,6 @@ class MainActivity : AppCompatActivity() {
                     .addOnSuccessListener { documentReference ->
 
                         Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-                        Toast.makeText(this, "Note Added", Toast.LENGTH_SHORT).show()
 
                         addnewET.text.clear() // Clear text field after adding
 
@@ -85,7 +84,6 @@ class MainActivity : AppCompatActivity() {
                     }
                     .addOnFailureListener { e ->
                         Log.w(TAG, "Error adding document", e)
-                        Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
                     }
             }
             else{
